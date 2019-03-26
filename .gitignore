@@ -3,6 +3,6 @@ __pycache__/
 .DS_Store
 log/*
 .idea/
-.python-version 
+*.python-version 
 app/migrations/0*.py
 
