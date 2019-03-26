@@ -1,0 +1,38 @@
+{% extends "app/index.html" %}
+{% block button %}
+    <a href="{% url 'record_add' domain_id %}" class="btn btn-sm btn-success">添加记录</a>
+{% endblock button %}
+{% block table %}
+    <table class="table table-striped jambo_table bulk_action">
+    <a href="{% url 'sync_record_local' domain_id %}" class="btn btn-sm btn-warning">从网站同步记录到本地</a>
+        <thead>
+        <tr class="headings">
+            <th class="column-title">主机名</th>
+            <th class="column-title">记录类型</th>
+            <th class="column-title">记录值</th>
+            <th class="column-title">状态</th>
+            <th class="column-title">操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in all_obj %}
+            <tr class="even pointer">
+                <td class=" ">{{ obj.hostrecord }}</td>
+                <td class=" ">{{ obj.get_type_display }}</td>
+                <td class=" ">{{ obj.recordvalue }}</td>
+                <td class=" ">{{ obj.status }}</td>
+                <td class=" ">
+                    <a href="{% url 'record_edit' domain_id obj.id %}"
+                       class="btn btn-sm btn-warning">编辑</a>
+                    <a href="{% url 'record_del' domain_id obj.id %}"
+                       class="btn btn-sm btn-danger">删除</a>
+                    <a href="{% url 'sync_record_dnssite' domain_id obj.id %}" class="btn btn-sm btn-primary">同步到域名商</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+{% endblock table %}

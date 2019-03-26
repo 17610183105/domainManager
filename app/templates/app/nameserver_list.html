@@ -1,0 +1,35 @@
+{% extends "app/index.html" %}
+{% block button %}
+    <a href="{% url 'record_add' domain_id %}" class="btn btn-sm btn-success">添加nameserver</a>
+{% endblock button %}
+{% block table %}
+    <table class="table table-striped jambo_table bulk_action">
+        <a href="{% url 'nameserver_add' domainsite_id %}" class="btn btn-sm btn-warning">添加nameserver</a>
+        <thead>
+        <tr class="headings">
+            <th class="column-title">nameserver</th>
+            <th class="column-title">描述</th>
+            <th class="column-title">创建时间</th>
+            <th class="column-title">修改时间</th>
+            <th class="column-title">操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in all_obj %}
+            <tr class="even pointer">
+                <td class=" ">{{ obj.name }}</td>
+                <td class=" ">{{ obj.desc }}</td>
+                <td class=" ">{{ obj.ctime }}</td>
+                <td class=" ">{{ obj.mtime }}</td>
+                <td class=" ">
+                    <a href="{% url 'nameserver_edit' domainsite_id obj.id %}" class="btn btn-sm btn-warning">编辑</a>
+                    <a href="{% url 'nameserver_del' domainsite_id obj.id %}" class="btn btn-sm btn-danger">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+{% endblock table %}

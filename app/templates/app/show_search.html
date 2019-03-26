@@ -1,0 +1,15 @@
+{% extends "app/index.html" %}
+{% block table %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form action="" class="input-group" method="post">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="domain">
+                <span class="input-group-btn">
+                    <button class="btn  btn-success">搜索域名</button>
+                </span>
+
+            </form>
+        </div>
+    </div>
+{% endblock table %}

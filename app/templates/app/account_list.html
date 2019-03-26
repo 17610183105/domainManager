@@ -1,0 +1,33 @@
+{% extends "app/index.html" %}
+{% block table %}
+    <table class="table table-striped jambo_table bulk_action">
+        <a href="{% url 'account_add' %}" class="btn btn-sm btn-warning">添加帐号</a>
+        <thead>
+        <tr class="headings">
+            <th class="column-title">域名商</th>
+            <th class="column-title">帐号</th>
+            <th class="column-title">创建时间</th>
+            <th class="column-title">修改时间</th>
+            <th class="column-title">操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in all_obj %}
+            <tr class="even pointer">
+                <td class=" ">{{ obj.domainsite }}</td>
+                <td class=" ">{{ obj.account }}</td>
+                <td class=" ">{{ obj.ctime }}</td>
+                <td class=" ">{{ obj.mtime }}</td>
+                <td class=" ">
+                    <a href="{% url 'account_edit' obj.id %}" class="btn btn-sm btn-warning">编辑</a>
+                    <a href="{% url 'account_del' obj.id %}" class="btn btn-sm btn-danger">删除</a>
+                    <a href="{% url 'sync_to_local' obj.id %}" class="btn btn-sm btn-success">同步域名到本地</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+{% endblock table %}

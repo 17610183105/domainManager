@@ -1,0 +1,27 @@
+{% extends "app/index.html" %}
+{% block table %}
+    <table class="table table-striped jambo_table bulk_action">
+{#        <a href="{{  }}" class="btn btn-sm btn-warning">打开网站</a>#}
+        <thead>
+        <tr class="headings">
+            <th class="column-title">域名商</th>
+            <th class="column-title">帐号</th>
+            <th class="column-title">域名</th>
+            <th class="column-title">打开网站</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for account in account_infos %}
+            <tr class="even pointer">
+                <td class=" ">{{ account.account.domainsite.name }}</td>
+                <td class=" ">{{ account.account.account }}</td>
+                <td class=" ">{{ domain }}</td>
+                <td class=" "><a href="{{ account.account.domainsite.url }}" class="btn btn-sm btn-success" target="_blank">打开{{ account.account.domainsite.name }}</a></td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+{% endblock table %}

@@ -1,0 +1,183 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} {{ show_title_name }} {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="clearfix"></div>
+
+                {#       带标题的列表         #}
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+
+                            <h2>{{ show_title_name }}</h2>
+
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+                            {# 设置表上的按钮放置点 #}
+                            {% block button %}{% endblock button %}
+                            {% block table %}
+                                <div class="x_panel bg-green">
+                                    <div class="x_title">
+                                        <h2>过滤域名</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li class="dropdown">
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <form action="" method="get" class="form-horizontal">
+                                            {% load widget_tweaks %}
+                                            <div class="form-group">
+                                                {{ f.form.name__contains.label_tag }}
+                                                {% render_field f.form.name__contains class="form-control" %}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ f.form.account.label_tag }}
+                                                {% render_field f.form.account class="form-control" %}
+                                            </div>
+                                            <input type="submit" class="btn btn-sm btn-success">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+
+                                    <table class="table table-striped jambo_table bulk_action">
+
+                                        <a href="{% url 'domain_add' %}" class="btn btn-sm btn-warning">添加域名</a>
+
+                                        <thead>
+                                        <tr class="headings">
+                                            <th class="column-title">域名</th>
+                                            <th class="column-title">托管商</th>
+                                            <th class="column-title">帐号</th>
+                                            <th class="column-title">ns记录</th>
+                                            <th class="column-title">描述信息</th>
+                                            <th class="column-title">创建时间</th>
+                                            <th class="column-title">修改时间</th>
+                                            <th class="column-title">操作</th>
+                                            <th class="column-title">record</th>
+                                            <th class="bulk-actions" colspan="9">
+                                                <a class="antoo" style="color:#fff; font-weight:500;">
+                                                    Bulk Actions (<span class="action-cnt"> </span> ) <i
+                                                        class="fa fa-chevron-down"></i>
+                                                </a>
+                                            </th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% load my_filter %}
+                                        {% for obj in contacts %}
+                                            <tr class="even pointer">
+                                                {#                                                <td class="a-center ">#}
+                                                {#                                                    <input type="checkbox" class="flat" name="table_records">#}
+                                                {#                                                </td>#}
+                                                <td class=" ">{{ obj.name }}</td>
+                                                <td class=" ">{{ obj.account.domainsite.name }}</td>
+                                                <td class=" ">{{ obj.account.account }}</td>
+                                                <td class=" ">{% for foo in obj.nsrecord.all %}
+                                                    {{ foo.name }}  {% endfor %}</td>
+                                                <td class=" ">{{ obj.desc }}</td>
+                                                <td class=" ">{{ obj.ctime }}</td>
+                                                <td class=" ">{{ obj.mtime }}</td>
+                                                <td class=" ">
+                                                    <a href="{% url 'domain_edit' obj.id %}"
+                                                       class="btn btn-sm btn-warning">编辑</a>
+                                                    <a href="{% url 'domain_del' obj.id %}"
+                                                       class="btn btn-sm btn-danger">删除</a>
+                                                    {% if obj.account.domainsite.name == "godaddy" %}
+                                                        <a href="{% url 'sync_ns' obj.id %}"
+                                                           class="btn btn-sm btn-success">同步ns记录到网站</a>
+                                                    {% endif %}
+                                                </td>
+                                                <td class=" "><a href="{% url 'record_list' obj.id %}"
+                                                                 class="btn btn-sm btn-primary">编辑解析记录</a></td>
+                                            </tr>
+                                        {% endfor %}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="dataTables_paginate">
+                                    <span class="step-links">
+                                        {% if contacts.has_previous %}
+                                            <a href="?page=1{{ url_info }}">首页</a>
+                                            <a href="?page={{ contacts.previous_page_number }}{{ url_info }}">上一页</a>
+                                        {% endif %}
+
+                                        <span class="current">
+                                            第 {{ contacts.number }} 页,共 {{ contacts.paginator.num_pages }}页
+                                        </span>
+
+                                        {% if contacts.has_next %}
+                                            <a href="?page={{ contacts.next_page_number }}{{ url_info }}">下一页</a>
+                                            <a href="?page={{ contacts.paginator.num_pages }}{{ url_info }}">尾页</a>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            {% endblock table %}
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+    <!-- Chart.js -->
+    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- Skycons -->
+    <script src="/static/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/static/vendors/Flot/jquery.flot.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/static/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+{% endblock javascripts %}

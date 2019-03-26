@@ -1,0 +1,40 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Chart JS {% endblock title %}
+
+{% block stylesheets %}
+  {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="right_col" role="main">
+    <div class="">
+
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-8 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Bar graph <small>Sessions</small></h2>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <canvas id="mybarChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super }}
+    <!-- Chart.js -->
+    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+    <script>
+        var k,s;
+
+    </script>
+{% endblock javascripts %}

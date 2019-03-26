@@ -1,0 +1,58 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} {{ show_title_name }} {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-8 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>{{ show_title_name }}</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="main" style="height:350px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- ECharts -->
+    <script src="/static/vendors/echarts/dist/echarts.min.js"></script>
+    <script src="/static/vendors/echarts/map/js/world.js"></script>
+    <script src="/static/vendors/jquery/dist/jquery.js"></script>
+    <script>
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            title: {
+                left: 'center',
+                text: '每日新增域名'
+            },
+            tooltip: {},
+            xAxis: {
+                data: {{ data.key|safe }}
+            },
+            yAxis: {},
+            series: [{
+                name: '今日新增数量',
+                type: 'line',
+                data: {{ data.value }},
+            }]
+        };
+        myChart.setOption(option);
+    </script>
+    {{ block.super }}
+{% endblock javascripts %}
