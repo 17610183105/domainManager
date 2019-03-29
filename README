@@ -1,1 +1,7 @@
-安装requirement.txt中的模块,然后启动
+使用python 3.6.6
+1. 安装requirement.txt中的模块: pip install -r requirement.txt
+2. 到gentelella/settings.py中设置数据库:mysql
+3. 生成数据日志: python manage.py makemigrations
+4. 将初始数据写入数据库： python manage.py migrate
+5. 收集静态文件,方便nginx调用: python manage.py collectstatic(不使用nginx代理就不需要执行这一步)
+6. 运行: python manage.py runserver 0:80

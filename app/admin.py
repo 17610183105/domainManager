@@ -4,7 +4,6 @@ from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin,ImportExportModelAdmin
 
 
-# admin.site.register(models.domain)
 admin.site.register(models.account)
 admin.site.register(models.record)
 admin.site.register(models.domainsite)

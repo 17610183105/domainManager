@@ -222,7 +222,7 @@ def nameserver_change(request,domainsite_id,nameserver_id=None):
         # 对提交的数据进行校验
         if form_obj.is_valid():
             result = form_obj.save(commit=False)  # 新增,在这里设置主域名
-            result.main_domain = domainsite_obj
+            result.domainsite = domainsite_obj
             result.save()
             # form_obj.save()  # 新增
             # 跳转至展示页面

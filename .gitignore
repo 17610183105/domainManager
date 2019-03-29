@@ -5,4 +5,5 @@ log/*
 .idea/
 *.python-version 
 app/migrations/0*.py
+gentelella/settings.py
 

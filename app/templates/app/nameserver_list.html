@@ -1,7 +1,4 @@
 {% extends "app/index.html" %}
-{% block button %}
-    <a href="{% url 'record_add' domain_id %}" class="btn btn-sm btn-success">添加nameserver</a>
-{% endblock button %}
 {% block table %}
     <table class="table table-striped jambo_table bulk_action">
         <a href="{% url 'nameserver_add' domainsite_id %}" class="btn btn-sm btn-warning">添加nameserver</a>
